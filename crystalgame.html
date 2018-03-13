@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Crystal Game</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="crystalgame.css">
+    <link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet'>
+    <style>
+        .game-title {
+            font-family: 'Kalam';
+            font-style: italic;
+            font-size: 30px;
+            color: goldenrod;
+            text-shadow: 1px 1px red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-title" class="game-title">
+        <h1>Run The Jewels</h1>
+        <h3>Find The Jewels Game</h3>
+    </div>
+    <div class="background">
+        <div class="container">
+            <div id="instructions" class="instructions">
+                <h2>Game Instructions: </h2>
+                <ul>
+                    <li>1) Click the start button to create a randomly selected number from 5 through 30. </li>
+                    <li>2) Add up to the randomly selected number with the potential values from the jewels listed below. </li>
+                    <li>3) Match the random number for a win! Go over and you lose. </li>
+                </ul>
+                <button id="start-button" class="start-button">Click to Start</button>
+            </div>
+            <div id="output-box" class="output-box">
+                <div class="scorecard1">
+                    <div>
+                        <p class="fontstyle">Random
+                            <br> Number:</p>
+                        <output id="random-number" class="fontoutput"></output>
+                    </div>
+                    <div class="scorecard">
+                        <ul>
+                            <li>
+                                <img class="scoreimg" src="jewel3.png">= Equal To 1 or 5</li>
+                            <li>
+                                <img class="scoreimg" src="jewel4.png">= Equal To 2 or 6</li>
+                            <li>
+                                <img class="scoreimg" src="jewel2.png">= Equal To 3 or 7</li>
+                            <li>
+                                <img class="scoreimg" src="jewel5.png">= Equal To 4 or 8</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <p class="fontstyle">Wins</p>
+                    <output id="wins" class="fontoutput"></output>
+                </div>
+                <div>
+                    <p class="fontstyle">Losses</p>
+                    <output id="losses" class="fontoutput"></output>
+                </div>
+            </div>
+        </div>
+        <div id="crystals" class="crystals">
+            <div>
+                <p class="jewelid"> Jewel 1</p>
+                <input type="image" src="jewel3.png" name="Jewel1" class="jewelpic" id="crystal-output-1" />
+                <output id="crystal1" class="crystal"> </output>
+                <div>
+                    <output id="crystal1" class="crystal"> </output>
+                </div>
+            </div>
+            <div>
+                <p class="jewelid"> Jewel 2</p>
+                <input type="image" src="jewel4.png" name="Jewel2" class="jewelpic" id="crystal-output-2" />
+                <div>
+                    <output id="crystal2" class="crystal"> </output>
+                </div>
+            </div>
+            <div>
+                <p class="jewelid"> Jewel 3</p>
+                <input type="image" src="jewel2.png" name="Jewel3" class="jewelpic" id="crystal-output-3" />
+                <div>
+                    <output id="crystal3" class="crystal"> </output>
+                </div>
+            </div>
+            <div>
+                <p class="jewelid"> Jewel 4</p>
+                <input type="image" src="jewel5.png" name="Jewel4" class="jewelpic" id="crystal-output-4" />
+                <div>
+                    <output id="crystal4" class="crystal"> </output>
+                </div>
+            </div>
+            <div class="total-score">
+                <p> Jewel Total</p>
+                <div>
+                    <output id="crystaladdr" class="fontoutput"></output>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        <p>2018 - Sean Brown</p>
+
+    </div>
+
+    <script>
+        var randomOne = [1, 5];
+        var randomTwo = [2, 6];
+        var randomThree = [3, 7];
+        var randomFour = [4, 8];
+        var totalScore1 = 0;
+        var totalScore2 = 0;
+        var totalScore3 = 0;
+        var totalScore4 = 0;
+        var targetTotal = 0;
+        var winCounter = 1;
+        var lossCounter = 1;
+        var finalScore = totalScore1 + totalScore2 + totalScore3 + totalScore4;
+
+
+
+        $(document).ready(function () {
+
+            //Start Button
+
+            $("#start-button").on("click", function () {
+                var targetNumber = 5 + Math.floor(Math.random() * 30);
+                $("#random-number").html(targetNumber);
+                targetTotal = targetNumber;
+                $("#crystal1").html("");
+                $("#crystal2").html("");
+                $("#crystal3").html("");
+                $("#crystal4").html("");
+                $("#crystaladdr").html(0);
+                totalScore1 = 0; 
+                totalScore2 = 0; 
+                totalScore3 = 0; 
+                totalScore4 = 0; 
+
+
+            });
+
+
+            //Crystal Buttons
+            $("#crystal-output-1").on("click", function () {
+                var increment1 = (randomOne)[Math.round(Math.random())];
+                $("#crystal1").html(increment1);
+                totalScore1 += increment1;
+                getTotal();
+
+
+            });
+
+            $("#crystal-output-2").on("click", function () {
+                var increment2 = (randomTwo)[Math.round(Math.random())];
+                $("#crystal2").html(increment2);
+                totalScore2 += increment2;
+                getTotal();
+
+
+            });
+
+            $("#crystal-output-3").on("click", function () {
+                var increment3 = (randomThree)[Math.round(Math.random())];
+                $("#crystal3").html(increment3);
+                totalScore3 += increment3;
+                getTotal();
+
+
+            });
+
+            $("#crystal-output-4").on("click", function () {
+                var increment4 = (randomFour)[Math.round(Math.random())];
+                $("#crystal4").html(increment4);
+                totalScore4 += increment4;
+                getTotal();
+
+            });
+
+
+
+            //crystal adder function
+            function getTotal() {
+                var finalScore = totalScore1 + totalScore2 + totalScore3 + totalScore4;
+                $("#crystaladdr").html(finalScore);
+                $("#random-number").html(targetTotal);
+                var wins = $("#wins");
+                var losses = $("#losses");
+                console.log(finalScore); 
+
+
+                if (finalScore === targetTotal) {
+                    wins.html(winCounter);
+                    wins = winCounter++;
+                    finalScore= 0;
+                    targetTotal = ("");
+
+                };
+
+
+                if (finalScore > targetTotal) {
+                    losses.html(lossCounter);
+                    losses = lossCounter++;
+                    finalScore = 0; 
+                    targetTotal = ("");
+
+                };
+
+
+            };
+
+        });
+
+
+
+
+
+    </script>
+</body>
+
+</html>
